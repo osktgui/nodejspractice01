@@ -9,6 +9,9 @@ app.set('view options', {
 	layout: false
 });
 
+
+app.use(express.static(__dirname + '/public')); //Middleware for static files and views
+
 app.get('/', function(req, res){
 	res.render('main', {
 		title: 'Main Page'
@@ -33,16 +36,18 @@ app.get('/about*', function(req, res){
 
 //404 - not found
 app.use(function(req, res){
-	res.type('text/plain');
 	res.status(404);
-	res.send('404 - Not found');
+	res.render('404', {
+		title: '404 - Page not found'
+	});
 });
 
 //500 - Internal Error
 app.use(function(req, res){
-	res.type('text/plain');
 	res.status(500);
-	res.send('500 - Internal Error');
+	res.render('500', {
+		title: '500 - Internal Error'
+	});
 });
 
 
