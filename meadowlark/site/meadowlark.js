@@ -2,13 +2,19 @@ var express = require('express');
 
 var app = express();
 
+var fortunes = [
+	'Conquer your fears or they will conquer you.', 'Rivers need springs.',
+	'Do not fear what you dont know.',
+	'You will have a pleasant surprise.',
+	'Whenever possible, keep it simple.',
+];
+
 app.set('port', process.env.PORT || 3000);
 app.set('view engine', 'jade');
 app.set('views', __dirname + '/views');
 app.set('view options', {
 	layout: false
 });
-
 
 app.use(express.static(__dirname + '/public')); //Middleware for static files and views
 
@@ -29,8 +35,10 @@ app.get('/about/directions', function(req, res){
 });
 
 app.get('/about*', function(req, res){
+	var randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
 	res.render('about', {
-		title: 'About Page'
+		title: 'About Page',
+		fortune: randomFortune
 	});
 });
 
