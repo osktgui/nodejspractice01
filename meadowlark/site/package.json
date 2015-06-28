@@ -1,0 +1,19 @@
+{
+  "name": "meadowlark",
+  "version": "1.0.0",
+  "description": "learning -node js",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.13.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "nodejs",
+    "express"
+  ],
+  "author": "Osktgui",
+  "license": "ISC"
+}
