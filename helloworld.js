@@ -1,4 +1,21 @@
-var http = require('http');
+var http = require('http'),
+		fs = require('fs');
+
+function serverStaticFile(res, path, contentType, responseCode){ //open file, read file, send file
+	if(!responseCode){
+		responseCode = 200;
+	}
+
+	fs.readFile(__dirname + path, function(err, data){ //dirname --> Resuelve el directorio donde se esta ejecutando el script
+		if(err){
+			res.writeHead(500, { 'Content-Type': 'text/plain' });
+			res.end('500 - Internal Error');
+		}else{
+			res.writeHead(responseCode, { 'Content-Type': contentType });
+			res.end(data);
+		}
+	});
+}
 
 
 http.createServer(function(req, res){
@@ -7,16 +24,16 @@ http.createServer(function(req, res){
 
 	switch(path){
 		case '':
-			res.writeHead(200, { 'Content-Type': 'text/html' });
-			res.end('<h3>Path: Home</h3>');		
+			serverStaticFile(res, '/public/home.html', 'text/html');
 			break;
 		case '/about':
-			res.writeHead(200, { 'Content-Type': 'text/html' });
-			res.end('<h3>Path: about</h3>');
+			serverStaticFile(res, '/public/about.html', 'text/html');
+			break;
+		case '/img/poder.jpg':
+			serverStaticFile(res, '/public/img/poder.jpg', 'image/jpeg');
 			break;
 		default:
-			res.writeHead(404, { 'Content-Type': 'text/html' });
-			res.end('<h3>No found</h3>');
+			serverStaticFile(res, '/public/notfound.html', 'text/html');
 			break;
 	}
 }).listen(3000);
