@@ -12,6 +12,11 @@ app.set('view options', {
 
 app.use(express.static(__dirname + '/public')); //Middleware for static files and views
 
+app.use(function(req, res, next){
+	res.locals.showTests = app.get('env') !== 'production' && req.query.test === '1';
+	next();
+});
+
 app.get('/', function(req, res){
 	res.render('main', {
 		title: 'Main Page'
@@ -31,7 +36,8 @@ app.get('/about/directions', function(req, res){
 app.get('/about*', function(req, res){
 	res.render('about', {
 		title: 'About Page',
-		fortune: fortune.getFortune()
+		fortune: fortune.getFortune(),
+		pageTestScript: '/qa/tests-about.js'
 	});
 });
 

@@ -1,5 +1,20 @@
 html
 	head
 		title!= title
+		if showTests
+			link(rel='stylesheet', href='/vendor/mocha.css')
+		script(src="//code.jquery.com/jquery-2.0.2.min.js")
 	body
 		block content
+		if showTests
+			#mocha
+			script(src="/vendor/mocha.js")
+			script(src="/vendor/chai.js")
+			script
+				!= "mocha.ui('tdd');"
+				!= "var assert = chai.assert;"
+			script(src="/qa/tests-global.js")
+			if pageTestScript
+				script(src!= pageTestScript)
+			script
+				!= "mocha.run();"
