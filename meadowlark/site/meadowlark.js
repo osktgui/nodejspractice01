@@ -1,13 +1,7 @@
 var express = require('express');
+var fortune = require('./lib/fortune');
 
 var app = express();
-
-var fortunes = [
-	'Conquer your fears or they will conquer you.', 'Rivers need springs.',
-	'Do not fear what you dont know.',
-	'You will have a pleasant surprise.',
-	'Whenever possible, keep it simple.',
-];
 
 app.set('port', process.env.PORT || 3000);
 app.set('view engine', 'jade');
@@ -35,10 +29,9 @@ app.get('/about/directions', function(req, res){
 });
 
 app.get('/about*', function(req, res){
-	var randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
 	res.render('about', {
 		title: 'About Page',
-		fortune: randomFortune
+		fortune: fortune.getFortune()
 	});
 });
 
