@@ -10,6 +10,8 @@ app.set('view options', {
 	layout: false
 });
 
+//if( app.thing == null ) console.log( 'bleat!' ); JHint
+
 app.use(express.static(__dirname + '/public')); //Middleware for static files and views
 
 app.use(function(req, res, next){
