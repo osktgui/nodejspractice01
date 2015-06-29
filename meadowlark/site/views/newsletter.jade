@@ -1,16 +1,40 @@
 extends ./layout
 block content
 	h2 Sign up for our newsletter to receive news and specials!
-	form.form-horizontal(role="form", action="/process?form=newsletter", method="POST")
-		input(type="hidden", name="_csrf", value!=csrf)
-		.form-group
-			label.col-sm-2.control-label(for="fieldName") Name
-			.col-sm-4
-				input.form-control(type="text", id="fieldName", name="name")
-		.form-group
-			label.col-sm-2.control-label(for="fieldEmail") Email
-			.col-sm-4
-				input.form-control(type="email", required, id="fieldName", name="email")
-		.form-group
-			.col-sm-offset-2.col-sm-4
-				button.btn.btn-default(type="submit") Register
+	.formContainer
+		form.form-horizontal.newsletterForm(role="form", action="/process?form=newsletter", method="POST")
+			input(type="hidden", name="_csrf", value!=csrf)
+			.form-group
+				label.col-sm-2.control-label(for="fieldName") Name
+				.col-sm-4
+					input.form-control(type="text", id="fieldName", name="name")
+			.form-group
+				label.col-sm-2.control-label(for="fieldEmail") Email
+				.col-sm-4
+					input.form-control(type="email", required, id="fieldName", name="email")
+			.form-group
+				.col-sm-offset-2.col-sm-4
+					button.btn.btn-default(type="submit") Register
+	script.
+		$(document).ready(function(){ 
+			$('.newsletterForm').on('submit', function(evt){
+				evt.preventDefault();
+				var action = $(this).attr('action');
+				var $container = $(this).closest('.formContainer'); 
+				$.ajax({
+					url: action,
+					type: 'POST',
+					success: function(data){
+						if(data.success){ 
+							$container.html('<h2>Thank you!</h2>');
+						} else {
+							$container.html('There was a problem.');
+						} 
+					},
+					error: function(){
+						$container.html('There was a problem.');
+					} 
+				});
+			}); 
+		});
+
