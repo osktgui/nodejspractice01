@@ -2,6 +2,7 @@ var express = require('express');
 var fortune = require('./lib/fortune');
 var formidable = require('formidable'); //npm install formidable --save
 var jqupload = require('jquery-file-upload-middleware'); // npm install jquery-file-upload-middleware --save // File Upload Ajax -- frontend: http://blueimp.github.io/jQuery-File-Upload/
+var credentials = require('./credentials.js'); // add .gitignore credentials.js
  
 var app = express();
 
