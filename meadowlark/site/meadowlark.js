@@ -41,6 +41,18 @@ app.get('/about*', function(req, res){
 	});
 });
 
+app.get('/tours/hood-river', function(req, res){
+	res.render('tours/hood-river', {
+		title: 'Hood River'
+	});
+});
+
+app.get('/tours/request-group-rate', function(req, res){
+	res.render('tours/request-group-rate', {
+		title: 'Request Group Rate'
+	});
+});
+
 //404 - not found
 app.use(function(req, res){
 	res.status(404);
