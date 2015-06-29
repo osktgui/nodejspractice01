@@ -1,6 +1,7 @@
 var express = require('express');
 var fortune = require('./lib/fortune');
-
+var formidable = require('formidable'); //npm install formidable --save
+ 
 var app = express();
 
 app.set('port', process.env.PORT || 3000);
@@ -73,6 +74,34 @@ app.post('/process', function(req, res){
 		res.redirect(303, '/thank-you');
 	}
 
+});
+
+
+// Formidable
+app.get('/contest/vacation-photo', function(req,res){ 
+	var now = new Date(); 
+	console.log(now);
+	res.render('contest/vacation-photo',{
+		year: now.getFullYear(),
+		month: now.getMonth()
+	});
+});
+
+app.post('/contest/vacation-photo/:year/:month', function(req, res){ 
+	var form = new formidable.IncomingForm();
+	form.parse(req, function(err, fields, files){
+		if(err) return res.redirect(303, '/error'); 
+		console.log('received fields:'); 
+		console.log(fields);
+		console.log('received files:'); 
+		console.log(files);
+		res.redirect(303, '/thank-you');
+	});
+});
+
+app.get('/thank-you', function(req, res){
+	res.type('text/plain');
+	res.send('thank you!!!');
 });
 
 //404 - not found

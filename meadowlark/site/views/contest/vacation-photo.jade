@@ -1,0 +1,18 @@
+extends ../layout
+block content
+	form.form-horizontal(role="form" enctype="multipart/form-data" method="POST" action="/contest/vacation-photo/" + year + "/" + month)
+		.form-group
+			label.col-sm-2.control-label(for="fieldName") Name
+			.col-sm-4
+				input.form-control(type="text", id="fieldName", name="name")
+		.form-group
+			label.col-sm-2.control-label(for="fieldEmail") Email
+			.col-sm-4
+				input.form-control(type="email", id="fieldEmail", name="email")
+		.form-group
+			label.col-sm-2.control-label(for="fieldPhoto") Vacation photo
+			.col-sm-4
+				input.form-control(type="file", required, id="fieldPhoto", name="photo", accept="image/*")
+		.form-group
+			.col-sm-offset-2.col-sm-4
+				button(type="submit").btn.btn-primary Submit
