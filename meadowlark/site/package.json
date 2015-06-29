@@ -4,6 +4,7 @@
   "description": "learning -node js",
   "main": "index.js",
   "dependencies": {
+    "body-parser": "^1.13.1",
     "express": "^4.13.0",
     "jade": "^1.11.0"
   },
