@@ -1,6 +1,7 @@
 var express = require('express');
 var fortune = require('./lib/fortune');
 var formidable = require('formidable'); //npm install formidable --save
+var jqupload = require('jquery-file-upload-middleware'); // npm install jquery-file-upload-middleware --save // File Upload Ajax -- frontend: http://blueimp.github.io/jQuery-File-Upload/
  
 var app = express();
 
@@ -21,6 +22,20 @@ app.use(function(req, res, next){
 	res.locals.showTests = app.get('env') !== 'production' && req.query.test === '1';
 	next();
 });
+
+// lib: jquery-file-upload-middleware, File Upload Ajax
+app.use('/upload', function(req, res, next){ 
+	var now = Date.now(); 
+	jqupload.fileHandler({
+		uploadDir: function(){
+			return __dirname + '/public/uploads/' + now;
+		},
+		uploadUrl: function(){
+			return '/uploads/' + now; 
+		},
+	})(req, res, next);
+});
+
 
 app.get('/', function(req, res){
 	res.render('main', {
@@ -77,7 +92,7 @@ app.post('/process', function(req, res){
 });
 
 
-// Formidable
+// lib: Formidable, File Upload
 app.get('/contest/vacation-photo', function(req,res){ 
 	var now = new Date(); 
 	console.log(now);
@@ -98,6 +113,8 @@ app.post('/contest/vacation-photo/:year/:month', function(req, res){
 		res.redirect(303, '/thank-you');
 	});
 });
+
+
 
 app.get('/thank-you', function(req, res){
 	res.type('text/plain');
